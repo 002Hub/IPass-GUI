@@ -8,14 +8,18 @@
   },
   "package": {
     "productName": "ipass",
-    "version": "0.0.1"
+    "version": "0.1.0"
   },
   "tauri": {
     "allowlist": {
       "all": false,
-      "shell": {
+      "dialog": {
         "all": false,
-        "open": true
+        "open": false,
+        "save": false,
+        "ask": false,
+        "message": false,
+        "confirm": true
       }
     },
     "bundle": {
@@ -58,9 +62,10 @@
       {
         "fullscreen": false,
         "height": 600,
-        "resizable": true,
-        "title": "ipass-gui",
-        "width": 800
+        "resizable": false,
+        "title": "IPass",
+        "width": 880,
+        "theme": "Dark"
       }
     ]
   }

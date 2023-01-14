@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-family: MonoLisa, Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
@@ -16,7 +16,6 @@
   --fg-color: #303034; /* post background */
   --bg-color: #1B1B1E; /* page background etc */
   --text-color: #ECEAF1; /* text */
-  --blue-ish: #587291; /* buttons etc */
 
   color: var(--text-color);
   background-color: var(--bg-color);
@@ -28,46 +27,53 @@ a:hover {
 
 input,
 button {
-  color: #ffffff;
-  background-color: #0f0f0f98;
-}
+  color: var(--text-color);
+  background-color: var(--fg-color);
 
-.container {
-  margin: 0;
-  padding-top: 10vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-}
-
-.row {
-  display: flex;
-  justify-content: center;
-}
-
-a {
+  border-radius: 8px;
+  border: 1px solid transparent;
   font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  font-family: inherit;
+  transition: border-color 0.25s;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+@media only screen and (max-width: 600px) {
+  input,
+  button {
+    padding: 4px 8px;
+    font-size: 0.8em;
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 900px) {
+  input,
+  button {
+    padding: 5px 10px;
+    font-size: 0.9em;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  input,
+  button {
+    padding: 6.4px 12.8px;
+    font-size: 1em;
+  }
+}
+
+tr {
+  width: 50%;
+}
+
+
+input:not([readonly]){
+  color: var(--fg-color);
+  background-color: var(--text-color);
 }
 
 h1 {
   text-align: center;
-}
-
-input,
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  color: #0f0f0f;
-  background-color: #ffffff;
-  transition: border-color 0.25s;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 button {
@@ -83,6 +89,54 @@ button {
   outline: none;
 }
 
-#greet-input {
-  margin-right: 5px;
+#lockImg {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+}
+
+#lockLabel {
+  position: absolute;
+  top: 1em;
+  right: 4em;
+}
+
+#table_div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.entry_name,.entry_user,.entry_pass {
+  width: 70%;
+}
+
+.entry_name > input,.entry_user > input,.entry_pass > input {
+  width: 100%;
+}
+
+.table_actions>div>button {
+  height: 40%;
+}
+
+input[type="password"] {
+  user-select: none;
+}
+
+#password_prompt {
+  background: white;
+  color: black;
+  border: 1px solid black;
+  width: 50%;
+  height: 25%;
+  position: fixed;
+  left: 25%;
+  top: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 3px double var(--fg-color);
+  border-radius: 5%;
 }

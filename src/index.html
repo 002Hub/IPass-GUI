@@ -6,32 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title id="pageTitle">IPass - x.x.x</title>
     <script type="module" src="/main.js"></script>
+    <script type="module" src="/pwprompt.js"></script>
   </head>
 
   <body>
     <h1>IPass</h1>
-    <div class="container">
-      <table>
-        <thead>
-          <tr>
-            <td>Entry name</td>
-            <td>Username</td>
-            <td>Password</td>
-          </tr>
-
-          <tr>
-            <td class="entry_name">
-              ENTRY-NAME-HERE
-            </td>
-            <td class="hidden entry_user">
-              <input type="text" name="" id="" value="ENTRY-USERNAME-HERE">
-            </td>
-            <td class="hidden entry_pass">
-              <input type="text" name="" id="" value="ENTRY-PASSWORD-HERE">
-            </td>
-          </tr>
-        </thead>
-      </table>
+    <p id="lockLabel">Locked</p>
+    <img alt="Lock" id="lockImg" src="/images/security_lock_locked.png" height=50 width=50></img>
+    <br>
+    <div id="table_div">
+      <div id="table_entries">
+        <div>Entry name</div>
+        <div class="entry_name" id="createEntry_name"><input type="text" placeholder="New Entry Name"></div>
+      </div>
+      <div id="table_users">
+        <div>Username</div>
+        <div class="entry_user" id="createEntry_user"><input type="text" placeholder="New Username"></div>
+      </div>
+      <div id="table_pwds">
+        <div>Password</div>
+        <div class="entry_pass" id="createEntry_pass"><input type="password" placeholder="New Password"></div>
+      </div>
+      <div id="table_actions">
+        <div>Action</div>
+        <div class="button" id="createEntry_actions"><button>Create</button></div>
+      </div>
     </div>
+    
   </body>
 </html>

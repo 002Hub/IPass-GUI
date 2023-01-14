@@ -1,3 +1,4 @@
 /src-tauri/target
 *_backup
 *ignore*
+msi/
