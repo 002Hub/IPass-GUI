@@ -18,7 +18,7 @@ async function startup() {
 	document.querySelector("#createEntry_actions > button").addEventListener("click",createEntry);
 
 	let entries = await invoke("get_entries");
-	console.log(entries);
+
 	for(let i = 0; i < entries.length; i++) {
 		buildEntry(entries[i]);
 	}
@@ -74,63 +74,72 @@ async function startup() {
 	}
 }
 
+let entry_priority = 1
+
 function buildEntry(entry) {
-		
-		let nameDiv = document.createElement("div");
-		nameDiv.setAttribute("class", "entry_name");
-		nameDiv.setAttribute("id",`${entry.replaceAll(" ","-")}_name`)
-		
-		let nameInput = document.createElement("input");
-		nameInput.setAttribute("type", "text");
-		nameInput.setAttribute("placeholder", "New Entry Name");
-		nameInput.setAttribute("value", entry);
-		nameInput.setAttribute("readonly", true);
-		nameInput.setAttribute("unselectable", "on")
-		nameDiv.appendChild(nameInput);
-		
-		let userDiv = document.createElement("div");
-		userDiv.setAttribute("class", "entry_user");
-		userDiv.setAttribute("id",`${entry.replaceAll(" ","-")}_user`)
-		
-		let userInput = document.createElement("input");
-		userInput.setAttribute("type", "password");
-		userInput.setAttribute("placeholder", "New Username");
-		userInput.setAttribute("value", "PLACEHOLDER");
-		userInput.setAttribute("readonly", true);
-		userInput.setAttribute("unselectable", "on")
-		userDiv.appendChild(userInput);
-		
-		let passDiv = document.createElement("div");
-		passDiv.setAttribute("class", "entry_pass");
-		passDiv.setAttribute("id",`${entry.replaceAll(" ","-")}_pass`)
-		
-		let passInput = document.createElement("input");
-		passInput.setAttribute("type", "password");
-		passInput.setAttribute("placeholder", "New Password");
-		passInput.setAttribute("value", "PLACEHOLDER!");
-		passInput.setAttribute("readonly", true);
-		passInput.setAttribute("unselectable", "on")
-		passDiv.appendChild(passInput);
-		
-		let showButton = document.createElement("button");
-		showButton.innerText = "Show";
-		showButton.addEventListener("click",showEntry.bind(showButton, entry),false);
-		showButton.setAttribute("class", "showbutton");
 
-		let editButton = document.createElement("button");
-		editButton.innerText = "Edit";
-		editButton.addEventListener("click", editEntry.bind(editButton, entry), false);
-		editButton.setAttribute("class", "editbutton");
+	entry_priority++;
+	
+	let nameDiv = document.createElement("div");
+	nameDiv.setAttribute("class", "entry_name");
+	nameDiv.setAttribute("id",`${entry.replaceAll(" ","-")}_name`)
+	
+	let nameInput = document.createElement("input");
+	nameInput.setAttribute("type", "text");
+	nameInput.setAttribute("placeholder", "New Entry Name");
+	nameInput.setAttribute("value", entry);
+	nameInput.setAttribute("readonly", true);
+	nameInput.setAttribute("unselectable", "on")
+	nameInput.setAttribute("tabindex",entry_priority)
+	nameDiv.appendChild(nameInput);
+	
+	let userDiv = document.createElement("div");
+	userDiv.setAttribute("class", "entry_user");
+	userDiv.setAttribute("id",`${entry.replaceAll(" ","-")}_user`)
+	
+	let userInput = document.createElement("input");
+	userInput.setAttribute("type", "password");
+	userInput.setAttribute("placeholder", "New Username");
+	userInput.setAttribute("value", "PLACEHOLDER");
+	userInput.setAttribute("readonly", true);
+	userInput.setAttribute("unselectable", "on")
+	userInput.setAttribute("tabindex",entry_priority)
+	userDiv.appendChild(userInput);
+	
+	let passDiv = document.createElement("div");
+	passDiv.setAttribute("class", "entry_pass");
+	passDiv.setAttribute("id",`${entry.replaceAll(" ","-")}_pass`)
+	
+	let passInput = document.createElement("input");
+	passInput.setAttribute("type", "password");
+	passInput.setAttribute("placeholder", "New Password");
+	passInput.setAttribute("value", "PLACEHOLDER!");
+	passInput.setAttribute("readonly", true);
+	passInput.setAttribute("unselectable", "on")
+	userInput.setAttribute("tabindex",entry_priority)
+	passDiv.appendChild(passInput);
+	
+	let showButton = document.createElement("button");
+	showButton.innerText = "Show";
+	showButton.addEventListener("click",showEntry.bind(showButton, entry),false);
+	showButton.setAttribute("class", "showbutton");
+	showButton.setAttribute("tabindex",entry_priority)
 
-		let actionDiv = document.createElement("div")
-		actionDiv.appendChild(showButton)
-		actionDiv.appendChild(editButton)
-		actionDiv.setAttribute("id",`${entry.replaceAll(" ","-")}_actions`)
-		
-		document.getElementById("table_entries").appendChild(nameDiv)
-		document.getElementById("table_users").appendChild(userDiv)
-		document.getElementById("table_pwds").appendChild(passDiv)
-		document.getElementById("table_actions").appendChild(actionDiv)
+	let editButton = document.createElement("button");
+	editButton.innerText = "Edit";
+	editButton.addEventListener("click", editEntry.bind(editButton, entry), false);
+	editButton.setAttribute("class", "editbutton");
+	editButton.setAttribute("tabindex",entry_priority)
+
+	let actionDiv = document.createElement("div")
+	actionDiv.appendChild(showButton)
+	actionDiv.appendChild(editButton)
+	actionDiv.setAttribute("id",`${entry.replaceAll(" ","-")}_actions`)
+	
+	document.getElementById("table_entries").appendChild(nameDiv)
+	document.getElementById("table_users").appendChild(userDiv)
+	document.getElementById("table_pwds").appendChild(passDiv)
+	document.getElementById("table_actions").appendChild(actionDiv)
 		
 }
 
@@ -252,7 +261,7 @@ async function createEntry() {
 
 	let mpw = await get_pw()
 
-	let success = await invoke("create_entry", {name: entryNameField.value, username: entryNameField.value, pw: entryPassField.value, mpw: mpw});
+	let success = await invoke("create_entry", {name: entryNameField.value, username: entryUserField.value, pw: entryPassField.value, mpw: mpw});
 
 	if(success) {
 		alert("Successfully created entry!");
