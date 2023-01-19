@@ -14,7 +14,23 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 async function startup() {
-	
+
+	let select = document.querySelector(".select");
+	select.addEventListener("click", function(){
+		this.enabled = !this.enabled
+		if(this.enabled) {
+			this.classList.add("open")
+		} else {
+			this.classList.remove("open")
+		}
+
+		for(let cont of document.querySelectorAll(".select > div")) {
+			cont.style.display=(this.enabled && "block") || "none"
+		}
+		document.querySelector('#table_div').style.marginTop=(this.enabled && "8em") || "0px";
+	});
+
+
 	document.querySelector("#createEntry_actions > button").addEventListener("click",createEntry);
 
 	let entries = await invoke("get_entries");
@@ -57,7 +73,7 @@ async function startup() {
 					setTimeout(function(){
 						input.style.borderColor = originalColor;
 					},250)
-					
+
 					console.log('Text copied to clipboard');
 				}, function(err) {
 
@@ -70,7 +86,7 @@ async function startup() {
 					console.error('Failed to copy text: ', err);
 				});
 			});
-			
+
 	}
 }
 
@@ -79,11 +95,11 @@ let entry_priority = 1
 function buildEntry(entry) {
 
 	entry_priority++;
-	
+
 	let nameDiv = document.createElement("div");
 	nameDiv.setAttribute("class", "entry_name");
 	nameDiv.setAttribute("id",`${entry.replaceAll(" ","-")}_name`)
-	
+
 	let nameInput = document.createElement("input");
 	nameInput.setAttribute("type", "text");
 	nameInput.setAttribute("placeholder", "New Entry Name");
@@ -92,11 +108,11 @@ function buildEntry(entry) {
 	nameInput.setAttribute("unselectable", "on")
 	nameInput.setAttribute("tabindex",entry_priority)
 	nameDiv.appendChild(nameInput);
-	
+
 	let userDiv = document.createElement("div");
 	userDiv.setAttribute("class", "entry_user");
 	userDiv.setAttribute("id",`${entry.replaceAll(" ","-")}_user`)
-	
+
 	let userInput = document.createElement("input");
 	userInput.setAttribute("type", "password");
 	userInput.setAttribute("placeholder", "New Username");
@@ -105,11 +121,11 @@ function buildEntry(entry) {
 	userInput.setAttribute("unselectable", "on")
 	userInput.setAttribute("tabindex",entry_priority)
 	userDiv.appendChild(userInput);
-	
+
 	let passDiv = document.createElement("div");
 	passDiv.setAttribute("class", "entry_pass");
 	passDiv.setAttribute("id",`${entry.replaceAll(" ","-")}_pass`)
-	
+
 	let passInput = document.createElement("input");
 	passInput.setAttribute("type", "password");
 	passInput.setAttribute("placeholder", "New Password");
@@ -118,7 +134,7 @@ function buildEntry(entry) {
 	passInput.setAttribute("unselectable", "on")
 	userInput.setAttribute("tabindex",entry_priority)
 	passDiv.appendChild(passInput);
-	
+
 	let showButton = document.createElement("button");
 	showButton.innerText = "Show";
 	showButton.addEventListener("click",showEntry.bind(showButton, entry),false);
@@ -135,12 +151,12 @@ function buildEntry(entry) {
 	actionDiv.appendChild(showButton)
 	actionDiv.appendChild(editButton)
 	actionDiv.setAttribute("id",`${entry.replaceAll(" ","-")}_actions`)
-	
+
 	document.getElementById("table_entries").appendChild(nameDiv)
 	document.getElementById("table_users").appendChild(userDiv)
 	document.getElementById("table_pwds").appendChild(passDiv)
 	document.getElementById("table_actions").appendChild(actionDiv)
-		
+
 }
 
 async function editEntry(entry) {
@@ -157,7 +173,7 @@ async function editEntry(entry) {
 
 		entry_user.value = info[0];
 		entry_pass.value = info[1];
-		
+
 		entry_user.removeAttribute("readonly");
 		entry_user.setAttribute("unselectable", "off")
     	entry_user.type = "text";
@@ -185,8 +201,8 @@ async function editEntry(entry) {
 			alert("Could not edit entry!")
 			return;
 		}
-	
-		
+
+
 		entry_user.setAttribute("readonly", true);
 		entry_user.setAttribute("unselectable", "off")
     	entry_user.type = "password"
@@ -272,7 +288,7 @@ async function createEntry() {
 	} else {
 		alert("A critical error occured during entry creation");
 	}
-	
+
 }
 
 async function toggleLock() {
@@ -285,8 +301,9 @@ async function toggleLock() {
 		if(master_pw == "" || master_pw == null)return;
 	}
 
-	document.getElementById("lockLabel").innerText = txt;
+	document.getElementById("lockImg").title = txt;
+	document.getElementById("lockImg").alt = txt;
 	document.getElementById("lockImg").src = src;
-	
+
 	lock_status = !lock_status;
 }

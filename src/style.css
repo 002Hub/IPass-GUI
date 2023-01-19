@@ -73,7 +73,7 @@ input:not([readonly]){
 }
 
 h1 {
-  text-align: center;
+  margin-left: 2em;
 }
 
 button {
@@ -87,18 +87,6 @@ button:hover {
 input,
 button {
   outline: none;
-}
-
-#lockImg {
-  position: absolute;
-  top: 1em;
-  right: 1em;
-}
-
-#lockLabel {
-  position: absolute;
-  top: 1em;
-  right: 4em;
 }
 
 #table_div {
@@ -140,3 +128,74 @@ input[type="password"] {
   border: 3px double var(--fg-color);
   border-radius: 5%;
 }
+
+#table_actions > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#table_actions > div > button {
+  margin-left: 3px;
+}
+
+#table_div > div > div {
+  margin-bottom: 5px;
+}
+
+#createEntry_actions > button {
+  width: 100%;
+}
+
+#title {
+  cursor: pointer;
+}
+
+.select {
+  padding: 5px 10px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  height: 50px;
+  width: 50px;
+
+  /* hide the default dropdown arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+
+.select > div{
+  display: none;
+  position: absolute;
+  top: 4em;
+}
+.select > div > div{
+  width: 60px;
+}
+
+a.nostyle:link {
+  text-decoration: inherit;
+  color: inherit;
+}
+
+a.nostyle:visited {
+  text-decoration: inherit;
+  color: inherit;
+}
+
+/*
+.select{
+  transform: rotate(0deg);
+  transition: transform 1s linear;
+}
+
+.select.open{
+  transform: rotate(180deg);
+  transition: transform 1s linear;
+}
+*/

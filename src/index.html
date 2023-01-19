@@ -10,9 +10,14 @@
   </head>
 
   <body>
-    <h1>IPass</h1>
-    <p id="lockLabel">Locked</p>
-    <img alt="Lock" id="lockImg" src="/images/security_lock_locked.png" height=50 width=50></img>
+    <h1 id="title">IPass</h1>
+    <div class="select">
+      <img src="/images/menu.png" width="50" height="50">
+      <div>
+        <div><a href="/settings"><img id="cogWImg" src="/images/settings.png" width="50" height="50" alt="Locked" title="Locked"></a></div>
+        <div><img alt="Lock" id="lockImg" src="/images/security_lock_locked.png" height=50 width=50></img></div>
+      </div>
+    </div>
     <br>
     <div id="table_div">
       <div id="table_entries">
@@ -32,6 +37,5 @@
         <div class="button" id="createEntry_actions"><button tabindex="1">Create</button></div>
       </div>
     </div>
-    
   </body>
 </html>

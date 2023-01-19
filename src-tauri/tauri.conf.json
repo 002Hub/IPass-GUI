@@ -62,7 +62,7 @@
       {
         "fullscreen": false,
         "height": 600,
-        "resizable": false,
+        "resizable": true,
         "title": "IPass",
         "width": 880,
         "theme": "Dark"
