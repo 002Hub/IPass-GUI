@@ -147,9 +147,17 @@ function buildEntry(entry) {
 	editButton.setAttribute("class", "editbutton");
 	editButton.setAttribute("tabindex",entry_priority)
 
+	let deleteButton = document.createElement("button");
+	deleteButton.innerText = "Delete";
+	deleteButton.addEventListener("click", deleteEntry.bind(deleteButton, entry), false);
+	deleteButton.setAttribute("class", "deletebutton");
+	deleteButton.setAttribute("tabindex",entry_priority)
+
 	let actionDiv = document.createElement("div")
 	actionDiv.appendChild(showButton)
 	actionDiv.appendChild(editButton)
+	actionDiv.appendChild(deleteButton)
+	
 	actionDiv.setAttribute("id",`${entry.replaceAll(" ","-")}_actions`)
 
 	document.getElementById("table_entries").appendChild(nameDiv)
@@ -157,6 +165,19 @@ function buildEntry(entry) {
 	document.getElementById("table_pwds").appendChild(passDiv)
 	document.getElementById("table_actions").appendChild(actionDiv)
 
+}
+
+function deleteEntry(entry) {
+	let entry_user = document.querySelector(`#${entry.replaceAll(" ","-")}_user`);
+	let entry_pass = document.querySelector(`#${entry.replaceAll(" ","-")}_pass`);
+	let entry_name = document.querySelector(`#${entry.replaceAll(" ","-")}_name`);
+  let actions = document.querySelector(`#${entry.replaceAll(" ","-")}_actions`);
+
+	entry_user.remove()
+	entry_pass.remove()
+	entry_name.remove()
+	actions.remove()
+	invoke("remove_entry",{name: entry})
 }
 
 async function editEntry(entry) {
@@ -219,7 +240,7 @@ async function editEntry(entry) {
 }
 
 async function ask_pw() {
-	return await password_prompt("Enter your master password to proceed");
+	return await password_prompt("Enter your master password to proceed")
 }
 
 async function get_pw() {

@@ -188,14 +188,24 @@ a.nostyle:visited {
   color: inherit;
 }
 
-/*
-.select{
+.select > img {
   transform: rotate(0deg);
-  transition: transform 1s linear;
+  transition: transform 0.25s linear;
 }
 
-.select.open{
+.select.open > img {
   transform: rotate(180deg);
-  transition: transform 1s linear;
+  transition: transform 0.25s linear;
 }
-*/
+
+/* .select.open > div {
+  transition: 1s ease-in;
+  height: 8em;
+  overflow: hidden;
+}
+
+.select > div {
+  transform: none;
+  height: 0;
+  transition: 1s ease-out;
+} */

@@ -1,26 +1,20 @@
-window.password_prompt = async function(label_message, button_message, arg3, arg4, arg5) {
+window.password_prompt = async function(label_message, submitbutton_message, cancelbutton_message) {
     return new Promise((res,rej) => {
-        let callback,width,height;
+        let width = 200,height = 100;
         if (typeof label_message !== "string") label_message = "Password:";
-        if (typeof button_message !== "string") button_message = "Submit";
-        if (typeof arg3 === "function") {
-            callback = arg3;
-        }
-        else if (typeof arg3 === "number" && typeof arg4 === "number" && typeof arg5 === "function") {
-            width = arg3;
-            height = arg4;
-            callback = arg5;
-        }
-        if (typeof width !== "number") width = 200;
-        if (typeof height !== "number") height = 100;
-        if (typeof callback !== "function") callback = function(){};
+        if (typeof submitbutton_message !== "string") submitbutton_message = "Submit";
+        if (typeof cancelbutton_message !== "string") cancelbutton_message = "Cancel";
     
         let submit = function() {
-            callback(input.value);
             document.body.removeChild(div);
             window.removeEventListener("resize", resize, false);
             res(input.value)
         };
+        let cancel = function() {
+            document.body.removeChild(div)
+            window.removeEventListener("resize", resize, false)
+            rej()
+        }
         let resize = function() {
             div.style.left = ((window.innerWidth / 2) - (width / 2)) + "px";
             div.style.top = ((window.innerHeight / 2) - (height / 2)) + "px";
@@ -47,11 +41,22 @@ window.password_prompt = async function(label_message, button_message, arg3, arg
         div.appendChild(input);
     
         div.appendChild(document.createElement("br"));
+
+        let actionDiv = document.createElement("div")
     
-        let button = document.createElement("button");
-        button.innerHTML = button_message;
-        button.addEventListener("click", submit, false);
-        div.appendChild(button);
+        let submitbutton = document.createElement("button");
+        submitbutton.innerHTML = submitbutton_message;
+        submitbutton.style.display = "inline-block"
+        submitbutton.addEventListener("click", submit, false);
+        actionDiv.appendChild(submitbutton);
+
+        let cancelbutton = document.createElement("button");
+        cancelbutton.innerHTML = cancelbutton_message;
+        cancelbutton.style.display = "inline-block"
+        cancelbutton.addEventListener("click", cancel, false);
+        actionDiv.appendChild(cancelbutton);
+
+        div.appendChild(actionDiv)
     
         document.body.appendChild(div);
         window.addEventListener("resize", resize, false);
