@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body, html {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+
+        iframe {
+          display: block;
+          width: 100%;
+          height: 100%;
+          border: none;
+          margin: 0;
+          padding: 0;
+        }
+      </style>
+</head>
+<body>
+    Please authorise the Application in your browser!
+    <script>
+      const { invoke } = window.__TAURI__.tauri;
+      async function start() {
+        let code = await invoke("open_authorize");
+        let token= await (await fetch("https://ipass.ipost.rocks/get_token?code="+code)).text()
+        invoke("store_token",{
+          token: token
+        })
+        location.href="/settings.html"
+      }
+      start()
+    </script>
+</body>
+</html>

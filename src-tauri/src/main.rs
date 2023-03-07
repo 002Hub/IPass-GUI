@@ -3,7 +3,12 @@
 	windows_subsystem = "windows"
 )]
 
+use std::fs::File;
+use std::io::Write;
+
 extern crate ip_lib;
+extern crate rand;
+extern crate open;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 
@@ -38,8 +43,10 @@ fn get_entries() -> Vec<String> {
 	let mut vector: Vec<String> = Vec::default();
 	for entry in ip_lib::get_entries() {
 		let entry_filename = entry.unwrap().file_name();
-		let ent =entry_filename.to_str().unwrap();
-		vector.insert(0, ent[..ent.len()-6].to_string());
+		let ent = entry_filename.to_str().unwrap();
+		if ent != "token.ipasst" {
+			vector.insert(0, ent[..ent.len()-6].to_string());
+		}
 	}
 
 	vector.sort();
@@ -57,9 +64,32 @@ fn remove_entry(name: &str) -> bool {
 	return false;
 }
 
+#[tauri::command]
+fn open_authorize() -> u32 {
+	let code:u32 = rand::random();
+    open::that(format!("https://ipost.rocks/authorize?id=1&extra={}",code)).unwrap();
+	return code;
+}
+
+#[tauri::command]
+fn store_token(token: String) {
+	let filepath = &(ip_lib::get_ipass_folder()+"token.ipasst");
+	let mut file = File::create(filepath).unwrap();
+    file.write_all(token.as_bytes()).unwrap();
+}
+
+#[tauri::command]
+fn get_isync_status() -> bool {
+	let filepath = &(ip_lib::get_ipass_folder()+"token.ipasst");
+	std::path::Path::new(filepath).exists()
+}
+
 fn main() {
 	tauri::Builder::default()
-		.invoke_handler(tauri::generate_handler![get_version,create_entry,random_password,get_entry,get_entries,remove_entry])
+		.invoke_handler(tauri::generate_handler![
+			get_version,create_entry,random_password,
+			get_entry,get_entries,remove_entry,
+			open_authorize,store_token,get_isync_status])
 		.run(tauri::generate_context!())
 		.expect("error while running tauri application");
 }

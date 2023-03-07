@@ -9,6 +9,22 @@
 </head>
 <body>
     <h1 id="title"><a href="/" class="nostyle">IPass</a></h1>
-
+    <div>
+        <h2>ISync</h2>
+        <h4>Keep your passwords up-to-date on multiple devices</h4>
+        <span>Current status: <b id="ISyncStatus">Checking</b></span>
+        <a href="/enableISync.html" class="nostyle" id="enableISync">Enable ISync</a>
+    </div>
+    <script>
+        const { invoke } = window.__TAURI__.tauri;
+        async function start() {
+            let status = await invoke("get_isync_status")
+            document.getElementById("ISyncStatus").innerText=status?"Enabled":"Disabled"
+            if(status){
+                document.getElementById("enableISync").remove()
+            }
+        }
+        start()
+    </script>
 </body>
 </html>
