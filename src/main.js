@@ -13,6 +13,11 @@ window.addEventListener("DOMContentLoaded", () => {
 	startup();
 });
 
+function run_isync() {
+	invoke("sync_isync");
+}
+setInterval(run_isync, 1000 * 10);
+
 async function startup() {
 
 	let select = document.querySelector(".select");

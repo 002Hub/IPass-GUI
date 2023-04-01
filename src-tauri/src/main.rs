@@ -5,6 +5,7 @@
 
 use std::fs::File;
 use std::io::Write;
+use tokio::runtime::Runtime;
 
 extern crate ip_lib;
 extern crate rand;
@@ -19,7 +20,11 @@ fn get_version() -> String {
 
 #[tauri::command]
 fn create_entry(name: String, username: String, pw: &str, mpw: String) -> bool {
-	ip_lib::create_entry(&name, username+";"+pw, mpw)
+	let return_value = ip_lib::create_entry(&name, username+";"+pw, mpw);
+	if return_value {
+		isync_save();
+	}
+	return_value
 }
 
 #[tauri::command]
@@ -59,6 +64,7 @@ fn remove_entry(name: &str) -> bool {
 	let filepath = &(ip_lib::get_ipass_folder()+name+".ipass");
 	if std::path::Path::new(filepath).exists() {
 		std::fs::remove_file(filepath).unwrap();
+		isync_save();
 		return true;
 	}
 	false
@@ -84,12 +90,34 @@ fn get_isync_status() -> bool {
 	std::path::Path::new(filepath).exists()
 }
 
+fn isync_save() {
+	let isync_save_future = ip_lib::isync_save();
+
+	let rt = Runtime::new().unwrap();
+	let save_output = rt.block_on(isync_save_future);
+	println!("isync_save: {}",save_output);
+}
+
+#[tauri::command]
+fn sync_isync() {
+	let rt = Runtime::new().unwrap();
+
+	let isync_get_future = ip_lib::isync_get();
+
+	println!("going to block on isync_get");
+	let get_output = rt.block_on(isync_get_future);
+	println!("isync_get: {}",get_output);
+}
+
 fn main() {
+	sync_isync();
+
 	tauri::Builder::default()
 		.invoke_handler(tauri::generate_handler![
 			get_version,create_entry,random_password,
 			get_entry,get_entries,remove_entry,
-			open_authorize,store_token,get_isync_status])
+			open_authorize,store_token,get_isync_status,
+			sync_isync])
 		.run(tauri::generate_context!())
 		.expect("error while running tauri application");
 }
