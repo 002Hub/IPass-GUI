@@ -14,7 +14,7 @@ extern crate open;
 
 #[tauri::command]
 fn get_version() -> String {
-	return option_env!("CARGO_PKG_VERSION").unwrap_or("x.x.x").to_string();
+	option_env!("CARGO_PKG_VERSION").unwrap_or("x.x.x").to_string()
 }
 
 #[tauri::command]
@@ -31,10 +31,10 @@ fn random_password() -> String {
 fn get_entry(name: String, mpw: String) -> Result<(String,String),String> {
 	let binding = ip_lib::get_entry(&name, mpw);
 	if let Ok(data) = binding {
-		let mut split = data.split(";");
-		return Ok((split.next().unwrap().to_string(),split.next().unwrap().to_string()));
+		let mut split = data.split(';');
+		Ok((split.next().unwrap().to_string(),split.next().unwrap().to_string()))
 	} else {
-		return Err(binding.expect_err("expected error"));
+		Err(binding.expect_err("expected error"))
 	}
 }
 
@@ -51,7 +51,7 @@ fn get_entries() -> Vec<String> {
 
 	vector.sort();
 
-	return vector;
+	vector
 }
 
 #[tauri::command]
@@ -61,14 +61,14 @@ fn remove_entry(name: &str) -> bool {
 		std::fs::remove_file(filepath).unwrap();
 		return true;
 	}
-	return false;
+	false
 }
 
 #[tauri::command]
 fn open_authorize() -> u32 {
 	let code:u32 = rand::random();
     open::that(format!("https://ipost.rocks/authorize?id=1&extra={}",code)).unwrap();
-	return code;
+	code
 }
 
 #[tauri::command]
