@@ -13,8 +13,26 @@ window.addEventListener("DOMContentLoaded", () => {
 	startup();
 });
 
-function run_isync() {
+async function run_isync() {
+	let oldentries = await invoke("get_entries");
 	invoke("sync_isync");
+	let entries = await invoke("get_entries");
+
+	for(let i = 0; i < oldentries.length; i++) {
+		if(entries.includes(oldentries[i])) {
+			continue;
+		} else {
+			removeEntry(oldentries[i]);
+		}
+	}
+
+	for(let i = 0; i < entries.length; i++) {
+		if(document.getElementById(`${entries[i].replaceAll(" ","-")}_name`)) {
+			continue;
+		} else {
+			buildEntry(entries[i]);
+		}
+	}
 }
 setInterval(run_isync, 1000 * 10);
 
