@@ -1,6 +1,6 @@
 #![cfg_attr(
-	all(not(debug_assertions), target_os = "linux"),
-	windows_subsystem = "windows"
+    all(not(debug_assertions), target_os = "windows"),
+    windows_subsystem = "windows"
 )]
 
 use std::fs::File;
@@ -94,8 +94,8 @@ fn isync_save() {
 	let isync_save_future = ip_lib::isync_save();
 
 	let rt = Runtime::new().unwrap();
-	let save_output = rt.block_on(isync_save_future);
-	println!("isync_save: {}",save_output);
+	let _save_output = rt.block_on(isync_save_future);
+	//println!("isync_save: {}",save_output);
 }
 
 #[tauri::command]
@@ -104,9 +104,9 @@ fn sync_isync() {
 
 	let isync_get_future = ip_lib::isync_get();
 
-	println!("going to block on isync_get");
-	let get_output = rt.block_on(isync_get_future);
-	println!("isync_get: {}",get_output);
+	//println!("going to block on isync_get");
+	let _get_output = rt.block_on(isync_get_future);
+	//println!("isync_get: {}",get_output);
 }
 
 fn main() {

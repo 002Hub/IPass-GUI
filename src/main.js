@@ -3,11 +3,6 @@ const { invoke } = window.__TAURI__.tauri;
 let master_pw;
 let lock_status = true;
 
-// async function greet() {
-//   // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-//   greetMsgEl.textContent = await invoke("greet", { name: greetInputEl.value });
-// }
-
 window.addEventListener("DOMContentLoaded", () => {
 	document.getElementById("lockImg").addEventListener("click",toggleLock);
 	startup();
