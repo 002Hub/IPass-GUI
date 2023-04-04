@@ -85,6 +85,13 @@ fn store_token(token: String) {
 }
 
 #[tauri::command]
+fn remove_token() {
+	let filepath = &(ip_lib::get_ipass_folder()+"token.ipasst");
+	std::fs::remove_file(filepath).unwrap();
+	//TODO: cleaner solution via IPass api call to unauthorize
+}
+
+#[tauri::command]
 fn get_isync_status() -> bool {
 	let filepath = &(ip_lib::get_ipass_folder()+"token.ipasst");
 	std::path::Path::new(filepath).exists()
@@ -117,7 +124,7 @@ fn main() {
 			get_version,create_entry,random_password,
 			get_entry,get_entries,remove_entry,
 			open_authorize,store_token,get_isync_status,
-			sync_isync])
+			sync_isync,remove_token])
 		.run(tauri::generate_context!())
 		.expect("error while running tauri application");
 }
