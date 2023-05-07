@@ -11,11 +11,11 @@ tauri-build = { version = "1.2", features = [] }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.2.4", features = ["dialog-confirm"] }
+tauri = { version = "1.3.0", features = ["dialog-confirm"] }
 ip_lib = { path = "../library/" }
 rand="0.8.5"
-open="4.0"
-tokio="1.27"
+open="4.1.0"
+tokio="1.28.0"
 
 [features]
 # by default Tauri runs in production mode
