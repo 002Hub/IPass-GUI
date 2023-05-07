@@ -66,7 +66,9 @@ async function startup() {
 
 				if(!lock_status) {
 					let isUsername = input.parentElement.classList.contains("entry_user")
-					let entry_name = input.parentElement.id.slice(0,input.parentElement.id.length-5)
+					let qs = "#"+input.parentElement.id.slice(0,input.parentElement.id.length-5)+"_name > input[type=text]"
+					console.log(qs)
+					let entry_name = document.querySelector(qs).value
 					console.log(entry_name,input.parentElement.id)
 
 					let info = await invoke("get_entry",{
