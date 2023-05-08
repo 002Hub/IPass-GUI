@@ -49,7 +49,7 @@ fn get_entries() -> Vec<String> {
 	for entry in ip_lib::get_entries() {
 		let entry_filename = entry.unwrap().file_name();
 		let ent = entry_filename.to_str().unwrap();
-		if ent != "token.ipasst" {
+		if ent != "token.ipasst" && ent.len()>6 {
 			vector.insert(0, ent[..ent.len()-6].to_string());
 		}
 	}
@@ -74,6 +74,7 @@ fn remove_entry(name: &str) -> bool {
 fn open_authorize() -> u32 {
 	let code:u32 = rand::random();
     open::that(format!("https://ipost.rocks/authorize?id=1&extra={}",code)).unwrap();
+	//the IPass app id is 1
 	code
 }
 
