@@ -30,6 +30,7 @@ async function run_isync() {
 	}
 }
 setInterval(run_isync, 1000 * 10);
+run_isync();
 
 async function startup() {
 

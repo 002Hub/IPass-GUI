@@ -6,6 +6,7 @@
 use std::fs::File;
 use std::io::Write;
 use tokio::runtime::Runtime;
+use tauri::State;
 
 extern crate ip_lib;
 extern crate rand;
@@ -107,18 +108,16 @@ fn isync_save() {
 }
 
 #[tauri::command]
-fn sync_isync() {
-	let rt = Runtime::new().unwrap();
-
-	let isync_get_future = ip_lib::isync_get();
-
-	//println!("going to block on isync_get");
-	let _get_output = rt.block_on(isync_get_future);
-	//println!("isync_get: {}",get_output);
+fn sync_isync(rt: State<Runtime>) {
+	//println!("going to sync");
+	rt.spawn(async {
+		let _get_output = ip_lib::isync_get().await;
+		//println!("isync_get: {}",_get_output);
+	});
 }
 
 fn main() {
-	sync_isync();
+	let rt = Runtime::new().unwrap();
 
 	tauri::Builder::default()
 		.invoke_handler(tauri::generate_handler![
@@ -126,6 +125,7 @@ fn main() {
 			get_entry,get_entries,remove_entry,
 			open_authorize,store_token,get_isync_status,
 			sync_isync,remove_token])
+		.manage(rt)
 		.run(tauri::generate_context!())
 		.expect("error while running tauri application");
 }
