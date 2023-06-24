@@ -275,8 +275,8 @@ async function get_pw() {
 }
 
 async function showEntry(entry_name) {
-	let entry_user = document.querySelector(`#${entry_name.replaceAll(" ","-")}_user > input`);
-	let entry_pass = document.querySelector(`#${entry_name.replaceAll(" ","-")}_pass > input`);
+	let entry_user = document.querySelector(`#${entry_name.replaceAll(" ","-").replaceAll(".","\\.")}_user > input`);
+	let entry_pass = document.querySelector(`#${entry_name.replaceAll(" ","-").replaceAll(".","\\.")}_pass > input`);
 
 	if(this.innerText == "Show"){
 		let info = await invoke("get_entry",{
