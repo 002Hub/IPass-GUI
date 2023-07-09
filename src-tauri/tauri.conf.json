@@ -11,17 +11,6 @@
     "version": "1.0.0"
   },
   "tauri": {
-    "allowlist": {
-      "all": false,
-      "dialog": {
-        "all": false,
-        "open": false,
-        "save": false,
-        "ask": false,
-        "message": false,
-        "confirm": true
-      }
-    },
     "bundle": {
       "active": true,
       "category": "DeveloperTool",
@@ -54,9 +43,6 @@
     },
     "security": {
       "csp": null
-    },
-    "updater": {
-      "active": false
     },
     "windows": [
       {
