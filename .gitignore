@@ -2,3 +2,4 @@
 *_backup
 *ignore*
 msi/
+/src-tauri/gen/
