@@ -6,15 +6,17 @@ license = "GNU GPLv3"
 description = "A Password manager"
 repository = "https://git.ipost.rocks/Code002Lover/IPass-GUI"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "ipass_gui_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-tauri-build = { version = "2.0.0-beta.1", features = [] }
+tauri-build = { version = "2.0.0-beta", features = [] }
 
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "2.0.0-beta.2", features = [] }
+tauri = { version = "2.0.0-beta", features = [] }
 ip_lib = { path = "../library/" }
 rand="0.8.5"
 open="5.0.0"

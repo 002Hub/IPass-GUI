@@ -1,11 +1,22 @@
 {
+  "app": {
+    "windows": [
+      {
+        "fullscreen": false,
+        "height": 600,
+        "resizable": true,
+        "theme": "Dark",
+        "title": "IPass",
+        "width": 880
+      }
+    ],
+    "withGlobalTauri": true
+  },
   "build": {
-    "beforeDevCommand": "",
     "beforeBuildCommand": "",
+    "beforeDevCommand": "",
     "frontendDist": "../src"
   },
-  "productName": "ipass",
-  "version": "1.0.0",
   "bundle": {
     "active": true,
     "category": "DeveloperTool",
@@ -32,14 +43,7 @@
       "timestampUrl": ""
     }
   },
-  "app": {
-    "windows": [{
-    "fullscreen": false,
-    "height": 600,
-    "resizable": true,
-    "title": "IPass",
-    "width": 880,
-    "theme": "Dark"
-    }]
-  }
+  "plugins": {},
+  "productName": "ipass",
+  "version": "1.0.0"
 }
